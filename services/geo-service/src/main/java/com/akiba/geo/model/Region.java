@@ -24,6 +24,7 @@ public class Region extends BaseEntity{
     @JoinColumn(name = "country_id", nullable = false)
     private Country country;
 
+    @Setter(AccessLevel.NONE)
     @OneToMany(
         mappedBy = "region",
         cascade = CascadeType.ALL,

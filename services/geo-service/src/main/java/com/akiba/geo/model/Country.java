@@ -22,6 +22,7 @@ public class Country extends BaseEntity{
     @Column(nullable = false, length = 100)
     private String name;
 
+    @Setter(AccessLevel.NONE)
     @OneToMany(
         mappedBy = "country",
         cascade = CascadeType.ALL,
