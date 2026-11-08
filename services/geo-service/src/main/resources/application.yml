@@ -12,8 +12,19 @@ spring:
     properties:
       hibernate:
         format_sql: true
+
+  data:
+    web:
+      pageable:
+        max-page-size: 100
+        serialization-mode: via_dto
+
   flyway:
     enabled: true
+
+logging:
+  level:
+    org.hibernate.SQL: DEBUG
 
 server:
   port: 8081
