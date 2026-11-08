@@ -1,0 +1,23 @@
+info:
+  name: cities-name-desc
+  type: http
+  seq: 8
+
+http:
+  method: GET
+  url: "{{baseUrl}}/regions/1/cities?size=2&sort=name,desc"
+  params:
+    - name: size
+      value: "2"
+      type: query
+    - name: sort
+      value: name,desc
+      type: query
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
+  forwardAuthorizationHeader: false

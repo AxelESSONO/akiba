@@ -1,0 +1,20 @@
+info:
+  name: cities-lyon
+  type: http
+  seq: 7
+
+http:
+  method: GET
+  url: "{{baseUrl}}/cities?name=lyon"
+  params:
+    - name: name
+      value: lyon
+      type: query
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
+  forwardAuthorizationHeader: false
