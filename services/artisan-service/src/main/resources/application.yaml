@@ -1,0 +1,36 @@
+spring:
+  application:
+    name: artisan-service
+  datasource:
+    url: jdbc:postgresql://localhost:5433/akiba_artisan
+    username: akiba
+    password: akiba
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    open-in-view: false
+    properties:
+      hibernate:
+        format_sql: true
+
+  data:
+    web:
+      pageable:
+        max-page-size: 100
+        serialization-mode: via_dto
+
+  flyway:
+    enabled: true
+
+logging:
+  level:
+    org.hibernate.SQL: DEBUG
+
+server:
+  port: 8082
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info
