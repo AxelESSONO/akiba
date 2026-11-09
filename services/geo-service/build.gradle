@@ -2,6 +2,7 @@ plugins {
 	id 'java'
 	id 'org.springframework.boot' version '4.1.2'
 	id 'io.spring.dependency-management' version '1.1.7'
+	id 'jacoco'
 }
 
 group = 'com.akiba'
@@ -42,8 +43,58 @@ dependencies {
 	testCompileOnly 'org.projectlombok:lombok'
 	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 	testAnnotationProcessor 'org.projectlombok:lombok'
+
+	testImplementation 'org.springframework.boot:spring-boot-testcontainers'
+	testImplementation 'org.testcontainers:testcontainers-junit-jupiter'
+	testImplementation 'org.testcontainers:testcontainers-postgresql'
 }
 
 tasks.named('test') {
 	useJUnitPlatform()
 }
+
+jacoco {
+	toolVersion = '0.8.14'
+}
+
+def jacocoExclusions = [
+		'**/GeoServiceApplication*',
+		'**/*MapperImpl*',
+		'**/dto/**'
+]
+
+jacocoTestReport {
+	dependsOn test
+	reports {
+		xml.required = true
+		html.required = true
+	}
+	afterEvaluate {
+		classDirectories.setFrom(files(classDirectories.files.collect {
+			fileTree(dir: it, exclude: jacocoExclusions)
+		}))
+	}
+}
+
+jacocoTestCoverageVerification {
+	dependsOn jacocoTestReport
+	afterEvaluate {
+		classDirectories.setFrom(files(classDirectories.files.collect {
+			fileTree(dir: it, exclude: jacocoExclusions)
+		}))
+	}
+	violationRules {
+		rule {
+			limit {
+				counter = 'LINE'
+				minimum = 0.70
+			}
+		}
+	}
+}
+
+test {
+	finalizedBy jacocoTestReport
+}
+
+check.dependsOn jacocoTestCoverageVerification
