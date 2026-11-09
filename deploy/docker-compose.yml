@@ -11,5 +11,18 @@ services:
     volumes:
       - geo-data:/var/lib/postgresql/data
 
+  postgres-artisan:
+    image: postgres:17
+    container_name: akiba-postgres-artisan
+    environment:
+      POSTGRES_DB: akiba_artisan
+      POSTGRES_USER: akiba
+      POSTGRES_PASSWORD: akiba
+    ports:
+      - "5433:5432"
+    volumes:
+      - artisan-data:/var/lib/postgresql/data
+
 volumes:
   geo-data:
+  artisan-data:
