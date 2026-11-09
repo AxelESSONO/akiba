@@ -9,10 +9,17 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface CityRepository extends JpaRepository<City, Long> {
 
-    Page<City> findByRegionId(Long regionId, Pageable pageable);
+    @EntityGraph(attributePaths = {"region", "region.country"})
+    Optional<City> findWithRegionAndCountryById(Long id);
+
+    @EntityGraph(attributePaths = {"region", "region.country"})
+    Page<City> findByRegionId(Long regionId, Pageable pageable);   // annotation ajoutée sur la méthode existante
+
+    boolean existsByRegionId(Long regionId);
 
     Page<City> findByNameContainingIgnoreCase(String name, Pageable pageable);
 
@@ -27,4 +34,5 @@ public interface CityRepository extends JpaRepository<City, Long> {
     @EntityGraph(attributePaths = {"region", "region.country"})
     Page<City> findWithRegionByNameContainingIgnoreCase(String name, Pageable pageable);
 
+    List<City> id(Long id);
 }
