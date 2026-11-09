@@ -1,7 +1,7 @@
 plugins {
 	id 'java'
-	id 'org.springframework.boot' version '4.1.2'
-	id 'io.spring.dependency-management' version '1.1.7'
+	alias(libs.plugins.spring.boot)
+	alias(libs.plugins.spring.dependency.management)
 	id 'jacoco'
 }
 
@@ -12,10 +12,6 @@ java {
 	toolchain {
 		languageVersion = JavaLanguageVersion.of(25)
 	}
-}
-
-ext {
-	set('mapstructVersion', '1.6.3')
 }
 
 repositories {
@@ -29,12 +25,15 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-validation'
 	implementation 'org.springframework.boot:spring-boot-starter-webmvc'
 	implementation 'org.flywaydb:flyway-database-postgresql'
-	implementation "org.mapstruct:mapstruct:${mapstructVersion}"
+
 	compileOnly 'org.projectlombok:lombok'
 	runtimeOnly 'org.postgresql:postgresql'
 	annotationProcessor 'org.projectlombok:lombok'
-	annotationProcessor "org.mapstruct:mapstruct-processor:${mapstructVersion}"
-	annotationProcessor 'org.projectlombok:lombok-mapstruct-binding:0.2.0'
+
+	implementation libs.mapstruct
+	annotationProcessor libs.mapstruct.processor
+	annotationProcessor libs.lombok.mapstruct.binding
+
 	testImplementation 'org.springframework.boot:spring-boot-starter-actuator-test'
 	testImplementation 'org.springframework.boot:spring-boot-starter-data-jpa-test'
 	testImplementation 'org.springframework.boot:spring-boot-starter-flyway-test'
@@ -54,7 +53,7 @@ tasks.named('test') {
 }
 
 jacoco {
-	toolVersion = '0.8.14'
+	toolVersion = libs.versions.jacoco.get()
 }
 
 def jacocoExclusions = [
