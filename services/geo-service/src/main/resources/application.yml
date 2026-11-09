@@ -1,0 +1,36 @@
+spring:
+  application:
+    name: geo-service
+  datasource:
+    url: jdbc:postgresql://localhost:5432/akiba_geo
+    username: akiba
+    password: akiba
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    open-in-view: false
+    properties:
+      hibernate:
+        format_sql: true
+
+  data:
+    web:
+      pageable:
+        max-page-size: 100
+        serialization-mode: via_dto
+
+  flyway:
+    enabled: true
+
+logging:
+  level:
+    org.hibernate.SQL: DEBUG
+
+server:
+  port: 8081
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info

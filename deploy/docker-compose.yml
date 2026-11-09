@@ -1,0 +1,15 @@
+services:
+  postgres-geo:
+    image: postgres:17
+    container_name: akiba-postgres-geo
+    environment:
+      POSTGRES_DB: akiba_geo
+      POSTGRES_USER: akiba
+      POSTGRES_PASSWORD: akiba
+    ports:
+      - "5432:5432"
+    volumes:
+      - geo-data:/var/lib/postgresql/data
+
+volumes:
+  geo-data:

@@ -1,0 +1,23 @@
+info:
+  name: create-country
+  type: http
+  seq: 2
+
+http:
+  method: POST
+  url: "{{baseUrl}}/countries"
+  body:
+    type: json
+    data: |-
+      {
+        "isoCode":"UK",
+        "name":"United Kingdom"
+      }
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
+  forwardAuthorizationHeader: false
